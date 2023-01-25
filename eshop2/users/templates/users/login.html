@@ -1,0 +1,30 @@
+{% extends 'users/layout.html' %}
+
+{% load static  i18n socialaccount %}
+
+{% block title %} Store - Авторизация {% endblock %}
+
+{% block card-header %} {% trans "Sign In" %} {% endblock %}
+
+{% block card-body %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+            <input class="btn btn-primary" type="submit" value="{% trans 'Sign In' %}">
+        </div>
+    </form>
+
+    <a href="{% url 'account_reset_password' %}">Забыли пароль?</a>
+
+    <div class="form-group d-flex align-items-center">
+        <a href="{% provider_login_url 'github' %}" style="margin-top: 10px;">Continue with GithHub ---><i class="fab fa-github fa-2x" style="color: #303030;"></i></a>
+    </div>
+{% endblock %}
+
+{% block card-footer %}
+    <a href="{% url 'account_signup' %}">Нужен аккаунт? Зарегистрируйся</a>
+{% endblock %}
