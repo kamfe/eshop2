@@ -10,7 +10,7 @@ from users.models import MyUser
 
 class UserCreationForm(forms.ModelForm):
     first_name = forms.CharField(label='Name', widget=forms.TextInput, required=True)
-    last_name = forms.CharField(label='Lats_name', widget=forms.TextInput, required=True)
+    last_name = forms.CharField(label='Last_name', widget=forms.TextInput, required=True)
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
@@ -25,7 +25,7 @@ class UserCreationForm(forms.ModelForm):
         if password1 and password2 and password1 != password2:
             raise ValidationError("Passwords don't match")
         return password2
-    
+
     def save(self, commit=True):
         # Save the provided password in hashed format
         user = super().save(commit=False)

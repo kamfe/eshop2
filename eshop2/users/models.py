@@ -52,7 +52,8 @@ class MyUser(AbstractBaseUser):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        # сделать разрешение создавать заказы, только для юзеров с подтвержденной почтой 
+        # сделать разрешение создавать заказы
+        # только для юзеров с подтвержденной почтой
         return True
 
     def has_module_perms(self, app_label):
@@ -61,6 +62,6 @@ class MyUser(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
-    
+
     def get_absolute_url(self):
-      return f'/users/profile/{self.pk}/'
+        return f'/users/profile/{self.pk}/'
