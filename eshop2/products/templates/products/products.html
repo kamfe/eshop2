@@ -51,7 +51,7 @@
 
             <div class="row">
                 <!-- PRODUCT -->
-                {% for product in available_products %}
+                {% for product in page_obj %}
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="card h-100">
                             
@@ -82,7 +82,9 @@
                     {% if page_obj.has_previous %}
                         <li class="page-item">
                             <a class="page-link" href="?page=1">&laquo; first</a>
-                            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
                         </li>
                     {% else %}
                         <li class="page-item disabled">
@@ -97,7 +99,9 @@
                     {% if page_obj.has_next %}
                         <li class="page-item">
                             <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
-                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
                         </li>
                     {% else %}
                     <li class="page-item disabled">

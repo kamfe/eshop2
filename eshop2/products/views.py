@@ -15,15 +15,15 @@ class ProductsPageView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = all_objects(Category.objects)
-        context['available_products'] = available_products(Product.objects)
         return context
+
+    def get_queryset(self):
+        return available_products(Product.objects)
 
 
 class ProductsOfSelectedCategoryPageView(ProductsPageView):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['available_products'] = filter_objects(
-            objects=context['available_products'],
+    def get_queryset(self):
+        return filter_objects(
+            objects=available_products(Product.objects),
             category=self.kwargs['category_id']
         )
-        return context

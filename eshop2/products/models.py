@@ -16,7 +16,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.TextField()
+    name = models.TextField(unique=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=9, decimal_places=2)
     units_in_stock = models.PositiveIntegerField(default=0)
