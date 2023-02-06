@@ -7,9 +7,9 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.name
 
-    def save(self):
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         self.name = self.name[0].capitalize() + self.name[1:]
-        super(Category, self).save()
 
     class Meta:
         verbose_name_plural = 'categories'
@@ -27,4 +27,4 @@ class Product(models.Model):
     def __str__(self) -> str:
         category_list = [i.name for i in self.category.all()]
         category_list = ', '.join(category_list)
-        return f'Product: {self.name}, Category: {category_list}'
+        return f'Product: {self.name}, Categories: {category_list}'
