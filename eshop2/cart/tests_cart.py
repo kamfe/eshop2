@@ -19,22 +19,24 @@ class CartTestCase(TestCase):
         self.cart.add_or_update(ProductFactory(name='other product'), quantity=100)
         self.cart.add_or_update(ProductFactory(name='another product'))
 
-        # we have added 106 products, so len will be 5 + 100 + 1
-        self.assertEqual(len(self.cart), 106)
+        self.assertEqual(len(self.cart), 3)
 
     def test_update_product(self):
         first_product = ProductFactory()
         self.cart.add_or_update(first_product, quantity=5)
         self.cart.add_or_update(first_product, quantity=10)
 
-        self.assertEqual(len(self.cart), 10)
+        self.assertEqual(len(self.cart), 1)
+
+        cart = self.request.session['cart']
+        self.assertEqual(cart[str(first_product.id)]['quantity'], 10)
 
     def test_cannot_add_the_same_product_twice(self):
         same_product = ProductFactory()
         self.cart.add_or_update(same_product, quantity=5)
         self.cart.add_or_update(same_product, quantity=5)
 
-        self.assertEqual(len(self.cart), 5)
+        self.assertEqual(len(self.cart), 1)
 
     def test_remove(self):
         product = ProductFactory()
@@ -74,3 +76,11 @@ class CartTestCase(TestCase):
 
         self.assertEqual(cart[str(second_product.id)]['product'], second_product)
         self.assertEqual(cart[str(second_product.id)]['price'], second_product.price)
+
+    def test_get_product_ids_list(self):
+        first_product = ProductFactory()
+        self.cart.add_or_update(first_product, quantity=5)
+        second_product = ProductFactory(name='second product')
+        self.cart.add_or_update(second_product, quantity=1)
+
+        self.assertEqual(self.cart.get_product_ids_list(), [int(first_product.id), int(second_product.id)])
